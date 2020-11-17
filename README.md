@@ -2,7 +2,7 @@
 This is a simple Javascript app written using the Phaser framework to create a nice number counter animation with particle effects to celebrate follower milestones.
 
 # To Do
-- Iron out the code to resolve some particles not being displaying
+- Iron out the code to resolve some particles not being displayed
 - Create easily editable variables for foreground and background colours, follower count, particle count, particle style and font face
 - Add output generators (GIF and MP4)
 
