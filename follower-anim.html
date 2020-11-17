@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Follower Animation</title>
+        <style>
+			body {margin:0;padding:0;background-color:black;}
+			#gameWindow {margin-left:auto;margin-right:auto;width:800px;height:600px;}
+			@font-face {
+				font-family: 'orbitronregular';
+				src: url('orbitron-variablefont_wght.woff2') format('woff2'),
+				url('orbitron-variablefont_wght.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+		</style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.js"></script>
+		<script>
+			var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameWindow', { preload: preload, create: create, update: update });
+			
+			function preload() {
+				game.load.image('star', 'star.png');
+			}
+			
+			function create() {
+				game.stage.backgroundColor = "#373737";
+				
+				followers = 0;
+				
+				text = game.add.text(game.world.centerX, game.world.centerY, followers, );
+				text.font = "arial";
+				text.fontSize = 30;
+				
+				grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+				grd.addColorStop(0, '#FFC300');   
+				grd.addColorStop(0.5, '#FED759');
+				grd.addColorStop(1, '#FFC300');
+				text.fill = '#1FFF00';
+				text.align = 'center';
+				text.stroke = '#000000';
+				text.strokeThickness = 10;
+			
+				text.anchor.setTo(0.5, 0.5);
+				
+				text2 = game.add.text(game.world.centerX, game.world.centerY+100, "Thank you everyone!");
+				text2.font = "orbitronregular";
+				text2.fontSize = 35;
+				
+				grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+				grd2.addColorStop(0, '#FFC300');   
+				grd2.addColorStop(0.5, '#FED759');
+				grd2.addColorStop(1, '#FFC300');
+				text2.fill = grd2;
+				text2.align = 'center';
+				text2.stroke = '#000000';
+				text2.strokeThickness = 2;
+				text2.alpha = 0; 
+			
+				text2.anchor.setTo(0.5, 0.5);
+				
+				emitter = game.add.emitter(0, 0, 100);
+				emitter.makeParticles('star');
+				emitter.gravity = 200;
+				emitter.setAlpha(0.3, 0.8);
+				emitter.x = game.world.centerX;
+				emitter.y = game.world.centerY-10;
+				emitter.width = 50;
+				emitter.minParticleSpeed.setTo(-200, -300);
+				emitter.maxParticleSpeed.setTo(200, 300);
+				emitter.minParticleScale = 0.25;
+				emitter.maxParticleScale = 1;
+				//emitter.forEach(function(particle) {particle.tint = 0xff0000;});
+			}
+
+			function update() {
+				fontAlpha = 0;
+				
+				if (followers < 500) {
+					followers++;
+				}
+				
+				if (followers == 500) {
+					text.fill = '#F7FF00';
+				}
+				
+				timer = 100;
+				parTimer = 6000;
+		
+				switch(followers) {
+					case 0:
+						game.add.tween(text).to( { fontSize:30 }, timer, "Linear", true);
+						break;
+					case 99:
+						game.add.tween(text).to( { fontSize:60 }, timer, "Linear", true);
+						text.rotation =+ 0.1;
+						emitter.width = 100;
+						emitter.start(true, parTimer, null, 60);
+						break;
+					case 199:
+						game.add.tween(text).to( { fontSize:90 }, timer, "Linear", true);
+						text.rotation =- 0.15;
+						emitter.width = 150;
+						emitter.start(true, parTimer, null, 60);
+						break;
+					case 299:
+						game.add.tween(text).to( { fontSize:120 }, timer, "Linear", true);
+						text.rotation =+ 0.2;
+						emitter.width = 200;
+						emitter.start(true, parTimer, null, 60);
+						break;
+					case 399:
+						game.add.tween(text).to( { fontSize:150 }, timer, "Linear", true);
+						text.rotation =- 0.25;
+						emitter.width = 250;
+						emitter.start(true, parTimer, null, 60);
+						break;
+					case 499:
+						game.add.tween(text).to( { fontSize:180 }, timer, "Linear", true);
+						text.rotation =+ 0;
+						text.fill = grd;
+						emitter.width = 300;
+						emitter.start(true, parTimer, null, 60);
+						break;
+					case 500:
+						text2.alpha = 1;
+					default:
+				}
+				text.setText(followers);
+			}
+			
+		</script>
+    </head>
+    <body>
+	
+    <div id="gameWindow"></div>
+
+    </body>
+</html>
